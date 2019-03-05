@@ -16,14 +16,14 @@ app-fix-permission:
 app-install-back:
 	$(call run-in-container,www-data,php,composer install)
 
-#app-install-front:
-#	$(call run-in-container,root,node,npm install)
-#
-#app-assets-watch:
-#	$(call run-in-container,root,node,npm run watch)
-#
-#app-assets-build:
-#	$(call run-in-container,root,node,npm run dev)
+app-install-front:
+	$(call run-in-container,root,node,npm install)
+
+app-assets-watch:
+	$(call run-in-container,root,node,npm run watch)
+
+app-assets-build:
+	$(call run-in-container,root,node,npm run dev)
 
 app-cache-clear:
 	$(call run-in-container,www-data,php,php bin/console cache:clear --env=${env})
@@ -36,14 +36,13 @@ app-cache-clear:
 #	$(call run-in-container,www-data,php,php bin/console doctrine:fixtures:load --no-interaction)
 ##	mkdir -p web/assets/mp3/test-mp3
 ##	cp src/Resources/fixtures/mp3/test-mp3 web/assets/mp3/ -r
-#
-#php-cs-fix:
-#	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes src --diff --verbose)
-#	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes tests --diff --verbose)
-#
-#php-cs-check:
-#	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes src --dry-run --diff --verbose)
-#
+
+php-cs-fix:
+	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --show-progress=dots --verbose)
+
+php-cs-check:
+	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --diff --verbose)
+
 #js-cs-fix:
 #	$(call run-in-container,root,node,./node_modules/.bin/eslint --fix  --ext .jsx --ext .js frontend/Dictation/)
 #
@@ -56,3 +55,6 @@ app-cache-clear:
 cache-clear:
 	php bin/console cache:clear --env=prod
 	php bin/console cache:warmup --env=prod
+
+app-test:
+	$(call run-in-container,www-data,php,./bin/phpunit)

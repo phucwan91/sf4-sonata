@@ -1,0 +1,21 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->in(['src', 'tests'])
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'binary_operator_spaces' => ['align_double_arrow' => true, 'align_equals' => true],
+        'blank_line_after_namespace' => true,
+        'ordered_imports' => true,
+        'no_empty_comment' => true,
+        'no_empty_phpdoc' => true,
+        'no_trailing_whitespace' => true,
+        'phpdoc_inline_tag' => true,
+    ])
+    ->setUsingCache(false) // Enable by the default
+    ->setFinder($finder)
+;
