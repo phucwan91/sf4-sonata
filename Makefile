@@ -29,18 +29,25 @@ app-cache-clear:
 	$(call run-in-container,www-data,php,php bin/console cache:clear --env=${env})
 	$(call run-in-container,www-data,php,php bin/console cache:warmup --env=${env})
 
-#app-reset-data:
-##	$(call run-in-container,www-data,php,php bin/console doctrine:database:drop --if-exists --force)
-##	$(call run-in-container,www-data,php,php bin/console doctrine:database:create)
-##	$(call run-in-container,www-data,php,php bin/console doctrine:schema:create)
-#	$(call run-in-container,www-data,php,php bin/console doctrine:fixtures:load --no-interaction)
-##	mkdir -p web/assets/mp3/test-mp3
-##	cp src/Resources/fixtures/mp3/test-mp3 web/assets/mp3/ -r
+app-data-reset:
+	$(call run-in-container,www-data,php,php bin/console doctrine:database:create --if-not-exists)
+	make app-unmigrate
+	make app-migrate
+	make fixture-load
 
-php-cs-fix:
+app-unmigrate:
+	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate first)
+
+app-migrate:
+	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate)
+
+fixture-load:
+	$(call run-in-container,www-data,php,php bin/console hautelook:fixtures:load --no-interaction)
+
+app-cs-fix:
 	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --show-progress=dots --verbose)
 
-php-cs-check:
+app-cs-check:
 	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --diff --verbose)
 
 #js-cs-fix:
@@ -58,3 +65,6 @@ cache-clear:
 
 app-test:
 	$(call run-in-container,www-data,php,./bin/phpunit)
+
+app-composer:
+	$(call run-in-container,www-data,php,php -d memory_limit=-1 /usr/local/bin/composer $(TASK))
