@@ -1,0 +1,8 @@
+# Author Admin
+admin.author.name: 'Họ Tên'
+admin.author.email: 'Email'
+admin.author.projects: 'Dự án'
+# Project Admin
+admin.project.name: 'Tên dự án'
+admin.project.description: 'Mô tả'
+admin.project.author: 'Tác giả'
