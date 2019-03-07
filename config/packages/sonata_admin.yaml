@@ -1,0 +1,13 @@
+sonata_admin:
+    title: 'w'
+    title_logo: 100-logo.png
+    options:
+        html5_validate: false
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
