@@ -5,7 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
+ * Class Project.
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="app__project")
+ *
+ * @author Phuc Vo <van-phuc.vo@ekino.com>
  */
 class Project
 {

@@ -1,6 +1,22 @@
 App\Entity\Author:
+    super-admin:
+        username:      admin
+        firstName:     admin
+        lastName:      admin
+        email:         admin@admin.com
+        plainPassword: admin
+        superAdmin:    true
+        enabled:       true
+
     author_{1..10}:
-        name:  '<name()>'
-        email: '<email()>'
+        username:      author_<current()>
+        firstname:     <firstName()>
+        lastname:      <lastName()>
+        email:         <email()>
+        plainPassword: author_<current()>
+        roles:         [ROLE_AUTHOR]
+        superAdmin:    false
+        enabled:       true
+
 
 

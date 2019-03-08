@@ -6,8 +6,12 @@ sonata_admin:
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
-
-sonata_block:
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts: [admin]
+        groups:
+            content:
+                label:           Business
+                label_catalogue: App
+                icon:            '<i class="fa fa-th"></i>'
+                items:
+                    - app.admin.author
+                    - app.admin.project
+                roles: [ROLE_ADMIN, ROLE_SONATA_ADMIN]
