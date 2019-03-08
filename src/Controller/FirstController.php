@@ -18,7 +18,7 @@ class FirstController extends AbstractController
      */
     public function greeting()
     {
-        echo '<h2> Hey, welcome to my world :D </h2>';
+        echo '<h2> Hey :D </h2>';
 
         return new Response();
     }

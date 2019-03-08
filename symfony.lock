@@ -104,6 +104,9 @@
             "ref": "81dee417d2cc60cd1c9d6208dff2ec22a1103e93"
         }
     },
+    "friendsofsymfony/user-bundle": {
+        "version": "v2.1.2"
+    },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
@@ -244,8 +247,14 @@
     "sonata-project/doctrine-orm-admin-bundle": {
         "version": "3.8.3"
     },
+    "sonata-project/easy-extends-bundle": {
+        "version": "2.5.0"
+    },
     "sonata-project/exporter": {
         "version": "1.11.0"
+    },
+    "sonata-project/user-bundle": {
+        "version": "4.3.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.3"
