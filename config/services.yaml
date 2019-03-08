@@ -42,3 +42,8 @@ services:
             - ~
         tags:
             - { name: sonata.admin, manager_type: orm, label: Author }
+
+    # Manager
+    App\Manager\AuthorManager:
+        arguments:
+            $class: 'App\Entity\Author'
