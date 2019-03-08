@@ -50,15 +50,6 @@ app-cs-fix:
 app-cs-check:
 	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --diff --verbose)
 
-#js-cs-fix:
-#	$(call run-in-container,root,node,./node_modules/.bin/eslint --fix  --ext .jsx --ext .js frontend/Dictation/)
-#
-#update:
-#	git pull
-#	npm run prod
-#	php bin/console cache:clear --env=prod
-#	php bin/console cache:warmup --env=prod
-
 cache-clear:
 	php bin/console cache:clear --env=prod
 	php bin/console cache:warmup --env=prod
@@ -68,3 +59,9 @@ app-test:
 
 app-composer:
 	$(call run-in-container,www-data,php,php -d memory_limit=-1 /usr/local/bin/composer $(TASK))
+
+app-lint-yaml:
+	$(call run-in-container,www-data,php,php bin/console lint:yaml config)
+
+app-lint-twig:
+	$(call run-in-container,www-data,php,php bin/console lint:twig templates)
