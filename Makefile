@@ -1,9 +1,11 @@
 .PHONY: app-install-back app-fix-permission app-install-front app-assets-watch app-assets-build app-cache-clear \
-app-reset-data php-cs-fix php-cs-check js-cs-fix update cache-clear
+app-reset-data php-cs-fix php-cs-check js-cs-fix update cache-clear sonata-update-core-routes sonata-update-snapshots
 
 include docker/Makefile
 
 PROJECT_DIR ?= /var/www/html/site
+
+env ?= dev
 
 define run-in-container
 	docker-compose exec --user $(1) -T $(2) /bin/sh -c "cd $(PROJECT_DIR) && $(3)";
@@ -33,7 +35,8 @@ app-data-reset:
 	$(call run-in-container,www-data,php,php bin/console doctrine:database:create --if-not-exists)
 	make app-unmigrate
 	make app-migrate
-	make fixture-load
+	make app-fixture-load
+	make app-cache-clear
 
 app-unmigrate:
 	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate first)
@@ -41,18 +44,14 @@ app-unmigrate:
 app-migrate:
 	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate)
 
-fixture-load:
-	$(call run-in-container,www-data,php,php bin/console hautelook:fixtures:load --no-interaction)
+app-fixture-load:
+	$(call run-in-container,www-data,php,php bin/console hautelook:fixtures:load --env=dev --no-interaction)
 
 app-cs-fix:
 	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --show-progress=dots --verbose)
 
 app-cs-check:
 	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --diff --verbose)
-
-cache-clear:
-	php bin/console cache:clear --env=prod
-	php bin/console cache:warmup --env=prod
 
 app-test:
 	$(call run-in-container,www-data,php,./bin/phpunit)
@@ -65,3 +64,9 @@ app-lint-yaml:
 
 app-lint-twig:
 	$(call run-in-container,www-data,php,php bin/console lint:twig templates)
+
+sonata-update-core-routes:
+	$(call run-in-container,www-data,php,php bin/console sonata:page:update-core-routes --site=all)
+
+sonata-update-snapshots:
+	$(call run-in-container,www-data,php,php bin/console sonata:page:create-snapshots --site=all)

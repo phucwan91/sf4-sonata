@@ -1,0 +1,9 @@
+App\Entity\Sonata\Site:
+    site:
+        enabled:     true
+        name:        w102
+        host:        localhost
+        enabledFrom: <dateTime()>
+        isDefault:   true
+        createdAt:   <dateTime()>
+        updatedAt:   <dateTime()>
