@@ -22,7 +22,6 @@ class AdminCompilerPass implements CompilerPassInterface
         $container
             ->getDefinition('sonata.user.admin.user')
             ->setClass(AuthorAdmin::class)
-            ->addMethodCall('setTranslationDomain', ['admin'])
         ;
     }
 }

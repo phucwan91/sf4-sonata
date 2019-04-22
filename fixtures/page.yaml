@@ -1,0 +1,23 @@
+App\Entity\Sonata\Page:
+    page (template):
+        enabled:         true
+        templateCode:    default
+        metaKeyword:     <word()>
+        metaDescription: <paragraph()>
+        site:            '@site'
+
+    page_global (extends page):
+        name:      Page global
+        routeName: _page_internal_global
+        decorate:  false
+
+    page_home (extends page):
+        name:      Home page
+        url:       /
+        routeName: page_slug
+
+    page_detail (extends page):
+        name:      Detail
+        parent:    '@page_home'
+        url:       /detail/{slug}
+        routeName: detail

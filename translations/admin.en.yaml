@@ -1,8 +1,18 @@
+# Menu
+admin.menu.business: Business
+admin.menu.side_builder: Site Builder
+
 # Author Admin
-admin.author.name: 'Full name'
-admin.author.email: 'Email'
-admin.author.projects: 'Projects'
+admin.author: Author
+admin.author.name: Full name
+admin.author.email: Email
+admin.author.projects: Projects
+
 # Project Admin
-admin.project.name: 'Name'
-admin.project.description: 'Description'
-admin.project.author: 'Author'
+admin.project: Project
+admin.project.name: Name
+admin.project.description: Description
+admin.project.author: Author
+
+# Sonata
+sonata.admin.page.action.global: Global Page
