@@ -226,6 +226,9 @@
     "sonata-project/cache": {
         "version": "2.0.1"
     },
+    "sonata-project/cache-bundle": {
+        "version": "2.4.2"
+    },
     "sonata-project/core-bundle": {
         "version": "3.9",
         "recipe": {
@@ -253,11 +256,49 @@
     "sonata-project/exporter": {
         "version": "1.11.0"
     },
+    "sonata-project/notification-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.4",
+            "ref": "222a1549f627f9faef39c0dd3cba1194a5175c00"
+        },
+        "files": [
+            "config/packages/sonata_notification.yaml"
+        ]
+    },
+    "sonata-project/page-bundle": {
+        "version": "3.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.9",
+            "ref": "f355eb1ec6c3e67fce6333d5140e8b3941bb0b54"
+        },
+        "files": [
+            "config/packages/sonata_page.yaml",
+            "config/routes/sonata_page.yaml",
+            "src/Entity/SonataPageBlock.php",
+            "src/Entity/SonataPagePage.php",
+            "src/Entity/SonataPageSite.php",
+            "src/Entity/SonataPageSnapshot.php"
+        ]
+    },
+    "sonata-project/seo-bundle": {
+        "version": "2.7.0"
+    },
     "sonata-project/user-bundle": {
         "version": "4.3.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.3"
+    },
+    "symfony-cmf/routing": {
+        "version": "2.1.0"
+    },
+    "symfony-cmf/routing-bundle": {
+        "version": "2.1.1"
     },
     "symfony/apache-pack": {
         "version": "1.0",
@@ -408,6 +449,9 @@
     },
     "symfony/polyfill-intl-icu": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.10.0"
@@ -576,5 +620,8 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
+    },
+    "zendframework/zenddiagnostics": {
+        "version": "v1.4.0"
     }
 }

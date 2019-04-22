@@ -1,0 +1,8 @@
+{% if admin.hasAccess('edit') and admin.hasRoute('edit') %}
+    <li>
+        <a class="sonata-action-element" href="{{ admin.generateUrl('compose', {'id': admin.getGlobalPage.id}) }}">
+            <i class="fa fa-globe" aria-hidden="true"></i>
+            {{ 'sonata.admin.page.action.global'|trans({}, 'admin') }}
+        </a>
+    </li>
+{% endif %}

@@ -1,0 +1,57 @@
+{% extends 'Page/base_layout.html.twig' %}
+
+{% block metadata %}
+    {{ sonata_seo_title() }}
+    {{ sonata_seo_metadatas() }}
+{% endblock metadata %}
+
+{% block favicon %}
+        <link rel="icon" type="text/x-icon" href="{{ asset('/100-logo.png') }}" />
+{% endblock favicon %}
+
+{% block stylesheets %}
+{#    {% if page.site.siteKey is not null %}#}
+{#        <link rel="stylesheet" href="{{ asset('assets/'~page.site.siteKey~'.css') }}">#}
+{#    {% endif %}#}
+{% endblock stylesheets %}
+
+{% block body %}
+    <header class="main-header">
+        {% block header %}
+            {{ sonata_page_render_container('header', 'global') }}
+            {{ sonata_page_render_container('header', page) }}
+        {% endblock header %}
+    </header>
+
+    <main class="main-content">
+        {% block page_content %}
+            {% if content is defined %}
+                {{ content|raw }}
+            {% else %}
+                {% set content = block('content') is defined ? block('content') : '' %}
+
+                {% if content|length > 0 %}
+                    {{ content|raw }}
+                {% else %}
+                    {{ sonata_page_render_container('content', 'global') }}
+                    {{ sonata_page_render_container('content', page) }}
+                {% endif %}
+            {% endif %}
+        {% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        {% block footer %}
+            {{ sonata_page_render_container('footer', 'global') }}
+            {{ sonata_page_render_container('footer', page) }}
+        {% endblock footer %}
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {#    {% if page.site.siteKey is not null %}#}
+    {#        <script type="text/javascript" src="{{ asset('assets/'~page.site.siteKey~'.js') }}" ></script>#}
+    {#    {% endif %}#}
+
+    {% include 'Page/Analytics/analytics.html.twig' %}
+{% endblock javascripts %}

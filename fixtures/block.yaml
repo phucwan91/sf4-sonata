@@ -1,0 +1,114 @@
+App\Entity\Sonata\Block:
+    block_header (template):
+        name:     Header
+        type:     sonata.page.block.container
+        enabled:  true
+        position: 0
+        settings:
+            code: header
+
+    block_content (template):
+        name:     Content
+        type:     sonata.page.block.container
+        enabled:  true
+        position: 0
+        settings:
+            code: content
+
+    block_footer (template):
+        name:     Footer
+        type:     sonata.page.block.container
+        enabled:  true
+        position: 0
+        settings:
+            code: footer
+
+    # Global page
+    block_container_page_global_header (extends block_header):
+        page: '@page_global'
+
+    block_container_page_global_content (extends block_content):
+        page: '@page_global'
+
+    block_container_page_global_footer (extends block_footer):
+        page: '@page_global'
+
+    block_page_global_header_home:
+        page:     '@page_global'
+        parent:   '@block_container_page_global_header'
+        name:     "Block Header"
+        type:     app.block.service.text
+        enabled:  true
+        position: 1
+        settings:
+            text: 'global header'
+
+    block_page_global_footer_home:
+        page:     '@page_global'
+        parent:   '@block_container_page_global_footer'
+        name:     "Block Footer"
+        type:     app.block.service.text
+        enabled:  true
+        position: 2
+        settings:
+            text: 'global footer'
+
+    # Home page
+    block_container_page_home_header (extends block_header):
+        page: '@page_home'
+
+    block_container_page_home_content (extends block_content):
+        page: '@page_home'
+
+    block_container_page_home_footer (extends block_footer):
+        page: '@page_home'
+
+    block_page_home_content_text:
+        page:     '@page_home'
+        parent:   '@block_container_page_home_content'
+        name:     'Block Text'
+        type:     app.block.service.text
+        enabled:  true
+        position: 1
+        settings:
+            text: 'content 1'
+
+    block_page_home_content_text_2:
+        page:     '@page_home'
+        parent:   '@block_container_page_home_content'
+        name:     'Block Text'
+        type:     app.block.service.text
+        enabled:  true
+        position: 2
+        settings:
+            text: 'content 2'
+
+    block_page_home_content_text_3:
+        page:     '@page_home'
+        parent:   '@block_container_page_home_content'
+        name:     'Block Text'
+        type:     app.block.service.text
+        enabled:  true
+        position: 3
+        settings:
+            text: 'content 3'
+
+    block_page_home_content_text_4:
+        page:     '@page_home'
+        parent:   '@block_container_page_home_content'
+        name:     'Block Text'
+        type:     app.block.service.text
+        enabled:  true
+        position: 4
+        settings:
+            text: 'content 4'
+
+    block_page_home_content_text_5:
+        page:     '@page_home'
+        parent:   '@block_container_page_home_content'
+        name:     'Block Text'
+        type:     app.block.service.text
+        enabled:  true
+        position: 5
+        settings:
+            text: 'content 5'

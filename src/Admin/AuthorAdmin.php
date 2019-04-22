@@ -19,6 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AuthorAdmin extends BaseUserAdmin
 {
+    protected $translationDomain = 'admin';
+
     /**
      * {@inheritdoc}
      */
