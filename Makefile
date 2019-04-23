@@ -1,9 +1,11 @@
-.PHONY: app-install-back app-fix-permission app-install-front app-assets-watch app-assets-build app-cache-clear \
-app-reset-data php-cs-fix php-cs-check js-cs-fix update cache-clear sonata-update-core-routes sonata-update-snapshots
+.PHONY: app-install-back app-fix-permission make app-install make app-install-back app-install-front app-assets-watch \
+app-assets-build app-cache-clear app-reset-data php-cs-fix php-cs-check js-cs-fix  app-cache-clear \
+sonata-update-core-routes sonata-update-snapshots
 
-include docker/Makefile
-
+INFRA_DIR    = infra
 PROJECT_DIR ?= /var/www/html/site
+
+include $(INFRA_DIR)/docker/Makefile
 
 env ?= dev
 
@@ -14,6 +16,10 @@ endef
 app-fix-permission:
 	docker-compose exec --user root php sh -c "chmod -R 775 $(PROJECT_DIR)/var/*"
 	docker-compose exec --user root php sh -c "chown -R www-data:www-data $(PROJECT_DIR)"
+
+app-install:
+	make app-install-back
+	make app-install-front
 
 app-install-back:
 	$(call run-in-container,www-data,php,composer install)
@@ -68,7 +74,7 @@ app-lint-twig:
 	$(call run-in-container,www-data,php,php bin/console lint:twig templates)
 
 sonata-update-core-routes:
-	$(call run-in-container,www-data,php,php bin/console sonata:page:update-core-routes --clean --site=all --env=${env})
+	$(call run-in-container,www-data,php,php bin/console sonata:page:update-core-routes --site=all --env=${env})
 
 sonata-update-snapshots:
 	$(call run-in-container,www-data,php,php bin/console sonata:page:create-snapshots --site=all --env=${env})

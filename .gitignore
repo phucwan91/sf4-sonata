@@ -16,7 +16,7 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-/docker/
+/infra/docker
 
 ###> friendsofphp/php-cs-fixer ###
 /.php_cs
