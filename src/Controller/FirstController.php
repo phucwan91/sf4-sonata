@@ -22,4 +22,16 @@ class FirstController extends AbstractController
 
         return new Response();
     }
+
+    /**
+     * @param string $slug
+     *
+     * @return Response
+     */
+    public function detail(string $slug)
+    {
+        echo "<h2> $slug :D </h2>";
+
+        return new Response();
+    }
 }

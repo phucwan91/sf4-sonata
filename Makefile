@@ -8,7 +8,7 @@ PROJECT_DIR ?= /var/www/html/site
 env ?= dev
 
 define run-in-container
-	docker-compose exec --user $(1) -T $(2) /bin/sh -c "cd $(PROJECT_DIR) && $(3)";
+	docker-compose exec --user $(1) $(2) /bin/sh -c "cd $(PROJECT_DIR) && $(3)";
 endef
 
 app-fix-permission:
@@ -36,13 +36,15 @@ app-data-reset:
 	make app-unmigrate
 	make app-migrate
 	make app-fixture-load
+	make sonata-update-core-routes
+	make sonata-update-snapshots
 	make app-cache-clear
 
 app-unmigrate:
-	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate first)
+	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate first --no-interaction --env=${env})
 
 app-migrate:
-	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate)
+	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate --no-interaction --env=${env})
 
 app-fixture-load:
 	$(call run-in-container,www-data,php,php bin/console hautelook:fixtures:load --env=dev --no-interaction)
@@ -66,7 +68,7 @@ app-lint-twig:
 	$(call run-in-container,www-data,php,php bin/console lint:twig templates)
 
 sonata-update-core-routes:
-	$(call run-in-container,www-data,php,php bin/console sonata:page:update-core-routes --site=all)
+	$(call run-in-container,www-data,php,php bin/console sonata:page:update-core-routes --clean --site=all --env=${env})
 
 sonata-update-snapshots:
-	$(call run-in-container,www-data,php,php bin/console sonata:page:create-snapshots --site=all)
+	$(call run-in-container,www-data,php,php bin/console sonata:page:create-snapshots --site=all --env=${env})

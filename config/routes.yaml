@@ -1,3 +1,8 @@
 greeting:
     path: /api/greeting
     controller: App\Controller\FirstController::greeting
+
+detail:
+    path: /detail/{slug}
+    controller: App\Controller\FirstController::detail
+
