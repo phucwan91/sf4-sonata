@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/phucwan91/sf4-sonata.svg?branch=master)](https://travis-ci.org/phucwan91/sf4-sonata)
+
 # Draft
 This app is under developed
 
