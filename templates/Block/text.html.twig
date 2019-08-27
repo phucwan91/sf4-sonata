@@ -1,1 +1,13 @@
-<h6>{{ settings.text }}</h6>
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div id="text-block">
+        <h6>{{ settings.text }}</h6>
+
+        <script type="text/javascript">
+            $(() => {
+                new Text(1, 'sample text');
+            });
+        </script>
+    </div>
+{% endblock %}

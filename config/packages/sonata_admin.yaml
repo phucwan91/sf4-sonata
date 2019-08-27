@@ -1,6 +1,6 @@
 sonata_admin:
     title: 'tunnel'
-    title_logo: 100-logo.png
+    title_logo: build/image/100-logo.png
     options:
         html5_validate: false
     dashboard:

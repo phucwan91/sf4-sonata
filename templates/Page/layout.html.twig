@@ -6,13 +6,13 @@
 {% endblock metadata %}
 
 {% block favicon %}
-        <link rel="icon" type="text/x-icon" href="{{ asset('/100-logo.png') }}" />
+        <link rel="icon" type="text/x-icon" href="{{ asset('/build/image/100-logo.png') }}" />
 {% endblock favicon %}
 
 {% block stylesheets %}
-{#    {% if page.site.siteKey is not null %}#}
-{#        <link rel="stylesheet" href="{{ asset('assets/'~page.site.siteKey~'.css') }}">#}
-{#    {% endif %}#}
+    {{ encore_entry_link_tags('app') }}
+
+    {{ encore_entry_script_tags('app') }}
 {% endblock stylesheets %}
 
 {% block body %}
@@ -49,9 +49,4 @@
 {% endblock %}
 
 {% block javascripts %}
-    {#    {% if page.site.siteKey is not null %}#}
-    {#        <script type="text/javascript" src="{{ asset('assets/'~page.site.siteKey~'.js') }}" ></script>#}
-    {#    {% endif %}#}
-
-    {% include 'Page/Analytics/analytics.html.twig' %}
 {% endblock javascripts %}
