@@ -5,8 +5,8 @@ services:
     build:
       context: ./node
       args:
-        uid: ${UID}
-        gid: ${GID}
+        UID: ${UID}
+        GID: ${GID}
     volumes:
       - ../:/var/www/html/site
     working_dir: /var/www/html/site

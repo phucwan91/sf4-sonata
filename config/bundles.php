@@ -31,4 +31,5 @@ return [
     Sonata\NotificationBundle\SonataNotificationBundle::class => ['all' => true],
     Sonata\CacheBundle\SonataCacheBundle::class => ['all' => true],
     Sonata\PageBundle\SonataPageBundle::class => ['all' => true],
+    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 ];

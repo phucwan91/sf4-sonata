@@ -13,6 +13,9 @@ define run-in-container
 	docker-compose exec --user $(1) $(2) /bin/sh -c "cd $(PROJECT_DIR) && $(3)";
 endef
 
+docker-inside-node:
+	docker-compose exec --user www-data node /bin/sh
+
 app-fix-permission:
 	docker-compose exec --user root php sh -c "chmod -R 775 $(PROJECT_DIR)/var/*"
 	docker-compose exec --user root php sh -c "chown -R www-data:www-data $(PROJECT_DIR)"
@@ -25,13 +28,16 @@ app-install-back:
 	$(call run-in-container,www-data,php,composer install)
 
 app-install-front:
-	$(call run-in-container,root,node,npm install)
+	$(call run-in-container,root,node,yarn install)
 
-app-assets-watch:
-	$(call run-in-container,root,node,npm run watch)
+app-lint-front:
+	$(call run-in-container,www-data,node,./node_modules/.bin/eslint assets)
 
-app-assets-build:
-	$(call run-in-container,root,node,npm run dev)
+app-asset-build:
+	$(call run-in-container,www-data,node,yarn encore ${env})
+
+app-asset-watch:
+	$(call run-in-container,www-data,node,yarn encore ${env} --watch)
 
 app-cache-clear:
 	$(call run-in-container,www-data,php,php bin/console cache:clear --env=${env})
@@ -68,13 +74,16 @@ app-composer:
 	$(call run-in-container,www-data,php,php -d memory_limit=-1 /usr/local/bin/composer $(TASK))
 
 app-lint-yaml:
-	$(call run-in-container,www-data,php,php bin/console lint:yaml config)
+	$(call run-in-container,www-data,php,bin/console lint:yaml config)
 
 app-lint-twig:
-	$(call run-in-container,www-data,php,php bin/console lint:twig templates)
+	$(call run-in-container,www-data,php,bin/console lint:twig templates)
+
+app-database-check:
+	$(call run-in-container,www-data,php,bin/console doctrine:schema:validate --env=${env})
 
 sonata-update-core-routes:
-	$(call run-in-container,www-data,php,php bin/console sonata:page:update-core-routes --site=all --env=${env})
+	$(call run-in-container,www-data,php,bin/console sonata:page:update-core-routes --site=all --env=${env})
 
 sonata-update-snapshots:
-	$(call run-in-container,www-data,php,php bin/console sonata:page:create-snapshots --site=all --env=${env})
+	$(call run-in-container,www-data,php,bin/console sonata:page:create-snapshots --site=all --env=${env})

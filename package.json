@@ -1,0 +1,17 @@
+{
+  "name": "sosf4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/phucwan91/sf4-sonata.git",
+  "license": "MIT",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.27.0",
+    "core-js": "^3.1.4",
+    "eslint": "^6.2.2",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.0.1",
+    "webpack-notifier": "^1.6.0"
+  },
+  "dependencies": {}
+}
