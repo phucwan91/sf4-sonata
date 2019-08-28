@@ -5,12 +5,16 @@ sonata-update-core-routes sonata-update-snapshots
 INFRA_DIR    = infra
 PROJECT_DIR ?= /var/www/html/site
 
-include $(INFRA_DIR)/docker/Makefile
+-include $(INFRA_DIR)/docker/Makefile
 
 env ?= dev
 
 define run-in-container
-	docker-compose exec --user $(1) $(2) /bin/sh -c "cd $(PROJECT_DIR) && $(3)";
+	@if [ ! -z $$(docker-compose ps -q $(2) 2>/dev/null) ]; then \
+		docker-compose exec --user $(1) $(2) /bin/sh -c "cd $(PROJECT_DIR) && $(3)"; \
+	else \
+		$(3); \
+	fi
 endef
 
 docker-inside-node:
@@ -31,7 +35,7 @@ app-install-front:
 	$(call run-in-container,root,node,yarn install)
 
 app-lint-front:
-	$(call run-in-container,www-data,node,./node_modules/.bin/eslint assets)
+	$(call run-in-container,www-data,node,./node_modules/.bin/eslint assets --format=table --color)
 
 app-asset-build:
 	$(call run-in-container,www-data,node,yarn encore ${env})
@@ -44,8 +48,8 @@ app-cache-clear:
 	$(call run-in-container,www-data,php,php bin/console cache:warmup --env=${env})
 
 app-data-reset:
-	$(call run-in-container,www-data,php,php bin/console doctrine:database:create --if-not-exists)
-	make app-unmigrate
+	$(call run-in-container,www-data,php,php bin/console doctrine:database:drop --force --if-exists --env=${env})
+	$(call run-in-container,www-data,php,php bin/console doctrine:database:create --if-not-exists --env=${env})
 	make app-migrate
 	make app-fixture-load
 	make sonata-update-core-routes
@@ -59,7 +63,7 @@ app-migrate:
 	$(call run-in-container,www-data,php,php bin/console doctrine:migration:migrate --no-interaction --env=${env})
 
 app-fixture-load:
-	$(call run-in-container,www-data,php,php bin/console hautelook:fixtures:load --env=dev --no-interaction)
+	$(call run-in-container,www-data,php,php bin/console hautelook:fixtures:load --no-interaction --env=${env})
 
 app-cs-fix:
 	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --show-progress=dots --verbose)
@@ -68,7 +72,7 @@ app-cs-check:
 	$(call run-in-container,www-data,php,./vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --diff --verbose)
 
 app-test:
-	$(call run-in-container,www-data,php,./bin/phpunit)
+	$(call run-in-container,www-data,php,./vendor/bin/phpunit)
 
 app-composer:
 	$(call run-in-container,www-data,php,php -d memory_limit=-1 /usr/local/bin/composer $(TASK))

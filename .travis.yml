@@ -1,0 +1,27 @@
+# see http://about.travis-ci.org/docs/user/languages/php/ for more hints
+
+language: php
+
+dist: xenial # Support mysql 5.7
+
+notifications:
+    email: false
+
+php:
+    - '7.2'
+
+services:
+    - mysql
+
+script:
+    - make app-install                                                || travis_terminate 1
+    - make app-cs-check                                               || travis_terminate 1
+    - make app-lint-twig                                              || travis_terminate 1
+    - make app-lint-yaml                                              || travis_terminate 1
+    - make app-lint-front                                             || travis_terminate 1
+    - bin/console doctrine:database:create --if-not-exists --env=test || travis_terminate 1
+    - make app-migrate env=test                                       || travis_terminate 1
+    - make app-fixture-load env=test                                  || travis_terminate 1
+    - make app-database-check env=test                                || travis_terminate 1
+    - make app-test                                                   || travis_terminate 1
+
